@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, Image } from 'react-native';
+import icon from './assets/icon.png';
 
 export default function App() {
   // Estado para armazenar o peso e a altura inseridos pelo usuário.
@@ -14,7 +15,7 @@ export default function App() {
     if (weight === '' || height === '') {
 
       // Verifica se os campos estão vazios e exibe um alerta se estiverem.
-      alert('Por favor, preencha todos os campos.');
+      Alert.alert('Erro', 'Por favor, preencha todos os campos.'); // Sobre o alert: https://reactnative.dev/docs/alert
       return;
       
     }
@@ -32,6 +33,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      {/* Imagem acima da header */}
+      <Image source={icon} style={styles.icone} />
+
       {/* Título da aplicação */}
       <Text style={styles.header}>Calculadora de IMC</Text>
 
@@ -52,8 +56,13 @@ export default function App() {
         keyboardType="numeric"
       />
 
-      {/* Botão para calcular o IMC */}
-      <Button title="Calcular IMC" onPress={calculateIMC} />
+      {/* Botão personalizado para calcular o IMC */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={calculateIMC}
+      >
+        <Text style={styles.buttonText}>Calcular IMC</Text>
+      </TouchableOpacity>
 
       {/* Exibe o resultado do IMC se estiver disponível */}
       {imc && (
@@ -82,20 +91,44 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   header: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 40,
   },
   input: {
     width: '100%',
-    height: 40,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     paddingHorizontal: 10,
+    paddingLeft: 20,
     marginBottom: 10,
+    borderRadius: 10,
+    fontSize: 18,
+    marginBottom: 15,
   },
   result: {
-    fontSize: 20,
+    fontSize: 22,
     marginTop: 20,
+  },
+  button: {
+    backgroundColor: 'black',
+    width: "100%",
+    borderRadius: 10, // Define bordas arredondadas
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  icone: {
+    width: 400, // Ajuste a largura da imagem conforme necessário
+    height: 200, // Ajuste a altura da imagem conforme necessário
+    resizeMode: 'contain', // Redimensionar a imagem para caber no espaço
+    marginBottom: 30, // Espaço entre a imagem e o título
   },
 });
